@@ -4,6 +4,7 @@ export interface MaquinariaDisponible {
   descripcion: string | null;
   precioDia: number;
   disponible: boolean;
+  imagen: string | null;
 }
 
 export interface MaquinariaFila {
@@ -12,6 +13,7 @@ export interface MaquinariaFila {
   descripcion: string | null;
   precio_dia: number;
   disponible: boolean;
+  imagen: string | null;
 }
 
 export const convertirMaquinaria = (
@@ -22,6 +24,7 @@ export const convertirMaquinaria = (
   descripcion: fila.descripcion,
   precioDia: fila.precio_dia,
   disponible: fila.disponible,
+  imagen: fila.imagen,
 });
 
 export const calcularDias = (inicio: string, fin: string): number =>

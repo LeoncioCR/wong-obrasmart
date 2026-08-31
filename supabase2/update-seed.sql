@@ -1,15 +1,38 @@
 -- ============================================================================
--- WONG ObraSmart - Seed de datos iniciales (Supabase / PostgreSQL)
--- FASE 25 - ETAPA 1
+-- WONG ObraSmart - Actualización idempotente de datos maestros
 --
--- Datos de DEMOSTRACIÓN alineados con el frontend (data/productos.ts,
--- data/kits.ts, data/maquinaria.ts) y con el esquema de supabase/schema.sql.
+-- Script seguro de actualización: NO borra datos existentes.
+--   - Si el registro (por su UUID) NO existe -> se inserta.
+--   - Si ya existe -> se actualiza (ON CONFLICT ... DO UPDATE).
+--   - Mantiene los UUID fijos del seed original.
 --
--- Los UUIDs son fijos para poder referenciarlos en las FKs (kit_productos).
--- Es un seed de una sola corrida: debe ejecutarse DESPUÉS de schema.sql.
+-- Actualiza: categorias, productos, kits, maquinarias, kit_productos.
+-- NO toca: clientes, cotizaciones, pedidos, alquileres.
+--
+-- IMÁGENES: usa únicamente URLs en línea públicas (https://images.unsplash.com/...)
+-- para productos.imagen y maquinarias.imagen. Sin rutas locales.
 -- ============================================================================
 
 begin;
+
+-- ============================================================================
+-- Asegurar UNIQUE (kit_id, producto_id) en kit_productos
+-- Si la restricción no existe se crea; si ya existe, no hace nada.
+-- Necesaria para poder usar ON CONFLICT con esa combinación.
+-- ============================================================================
+do $$
+begin
+    if not exists (
+        select 1
+        from pg_constraint
+        where conrelid = 'public.kit_productos'::regclass
+          and contype = 'u'
+          and conname = 'uk_kit_productos'
+    ) then
+        alter table public.kit_productos
+            add constraint uk_kit_productos unique (kit_id, producto_id);
+    end if;
+end $$;
 
 -- ============================================================================
 -- Categorías
@@ -17,16 +40,17 @@ begin;
 insert into public.categorias (id, nombre, descripcion, estado) values
     ('a0000000-0000-4000-8000-000000000001', 'materiales', 'Materiales de construcción para obra.', 'activo'),
     ('a0000000-0000-4000-8000-000000000002', 'kits', 'Paquetes de materiales, herramientas y maquinaria listos para usar.', 'activo'),
-    ('a0000000-0000-4000-8000-000000000003', 'maquinaria', 'Maquinaria y equipos para construcción.', 'activo');
+    ('a0000000-0000-4000-8000-000000000003', 'maquinaria', 'Maquinaria y equipos para construcción.', 'activo')
+on conflict (id) do update set
+    nombre      = excluded.nombre,
+    descripcion = excluded.descripcion,
+    estado      = excluded.estado;
 
 -- ============================================================================
--- Productos
+-- Productos (imagen = URL en línea, coherente con cada producto)
 -- ============================================================================
--- Subcategorías permitidas por el CHECK del esquema:
--- cemento, agregados, ladrillos, fierro, herramientas, pintura, tuberias.
 insert into public.productos
     (id, categoria_id, nombre, subcategoria, descripcion, precio, unidad, stock, imagen, estado) values
-    -- Productos base del catálogo (coinciden con data/productos.ts)
     ('b0000000-0000-4000-8000-000000000001', 'a0000000-0000-4000-8000-000000000001', 'Cemento Portland Tipo I (42.5 kg)', 'cemento',
      'Cemento de uso general para concreto, muros y elementos de albañilería.', 32.5, 'bolsa', 120, 'https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?auto=format&fit=crop&w=400&q=60', 'disponible'),
     ('b0000000-0000-4000-8000-000000000002', 'a0000000-0000-4000-8000-000000000001', 'Arena gruesa', 'agregados',
@@ -61,8 +85,6 @@ insert into public.productos
      'Tubería PVC para instalaciones de agua fría y riego.', 18, 'unidad', 60, 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=400&q=60', 'disponible'),
     ('b0000000-0000-4000-8000-000000000017', 'a0000000-0000-4000-8000-000000000001', 'Codo PVC 1/2"', 'tuberias',
      'Accesorio de 90° para cambios de dirección en tuberías de agua.', 3.5, 'unidad', 200, 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=400&q=60', 'disponible'),
-
-    -- Ítems adicionales requeridos por los kits (referenciados en kit_productos)
     ('b0000000-0000-4000-8000-000000000018', 'a0000000-0000-4000-8000-000000000001', 'Arena fina', 'agregados',
      'Agregado fino lavado para tarrajeo y acabados.', 85, 'm3', 30, 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=400&q=60', 'disponible'),
     ('b0000000-0000-4000-8000-000000000019', 'a0000000-0000-4000-8000-000000000001', 'Afirmado o piedra', 'agregados',
@@ -94,10 +116,21 @@ insert into public.productos
     ('b0000000-0000-4000-8000-000000000032', 'a0000000-0000-4000-8000-000000000001', 'Cinta métrica', 'herramientas',
      'Cinta métrica de 5 m para mediciones en obra.', 8, 'unidad', 40, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=60', 'disponible'),
     ('b0000000-0000-4000-8000-000000000033', 'a0000000-0000-4000-8000-000000000003', 'Batidora para pintura', 'herramientas',
-     'Batidora eléctrica para preparación de pintura y mezclas.', 50, 'día', 5, 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=400&q=60', 'disponible');
+     'Batidora eléctrica para preparación de pintura y mezclas.', 50, 'día', 5, 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=400&q=60', 'disponible')
+on conflict (id) do update set
+    categoria_id = excluded.categoria_id,
+    nombre       = excluded.nombre,
+    subcategoria = excluded.subcategoria,
+    descripcion  = excluded.descripcion,
+    precio       = excluded.precio,
+    unidad       = excluded.unidad,
+    stock        = excluded.stock,
+    imagen       = excluded.imagen,
+    estado       = excluded.estado,
+    updated_at   = now();
 
 -- ============================================================================
--- Kits (los 5 del frontend: data/kits.ts)
+-- Kits
 -- ============================================================================
 insert into public.kits (id, nombre, descripcion, tipo_obra, precio_referencial, estado) values
     ('c0000000-0000-4000-8000-000000000001', 'Falso piso',
@@ -114,10 +147,17 @@ insert into public.kits (id, nombre, descripcion, tipo_obra, precio_referencial,
      'Veredas y sardineles', 645, 'activo'),
     ('c0000000-0000-4000-8000-000000000005', 'Remodelación menor',
      'Lo esencial para renovar espacios pequeños sin detener tu día a día.',
-     'Remodelación y mantenimiento', 480, 'activo');
+     'Remodelación y mantenimiento', 480, 'activo')
+on conflict (id) do update set
+    nombre             = excluded.nombre,
+    descripcion        = excluded.descripcion,
+    tipo_obra          = excluded.tipo_obra,
+    precio_referencial = excluded.precio_referencial,
+    estado             = excluded.estado,
+    updated_at         = now();
 
 -- ============================================================================
--- Maquinaria (coincide con data/maquinaria.ts)
+-- Maquinaria (imagen = URL en línea, coherente con cada máquina)
 -- ============================================================================
 insert into public.maquinarias (id, nombre, descripcion, precio_dia, disponible, imagen) values
     ('d0000000-0000-4000-8000-000000000001', 'Mezcladora',
@@ -129,10 +169,18 @@ insert into public.maquinarias (id, nombre, descripcion, precio_dia, disponible,
     ('d0000000-0000-4000-8000-000000000004', 'Demoledor',
      'Martillo demoledor para remover concreto, demoliciones y trabajos pesados.', 55, true, 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=400&q=60'),
     ('d0000000-0000-4000-8000-000000000005', 'Cortadora',
-     'Cortadora de piso y concreto para cortes precisos en losas y veredas.', 70, false, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=60');
+     'Cortadora de piso y concreto para cortes precisos en losas y veredas.', 70, false, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=60')
+on conflict (id) do update set
+    nombre      = excluded.nombre,
+    descripcion = excluded.descripcion,
+    precio_dia  = excluded.precio_dia,
+    disponible  = excluded.disponible,
+    imagen      = excluded.imagen,
+    updated_at  = now();
 
 -- ============================================================================
 -- kit_productos: composición de cada kit (material / herramienta / maquinaria)
+-- Se usa ON CONFLICT (kit_id, producto_id) para no duplicar la relación.
 -- ============================================================================
 insert into public.kit_productos (kit_id, producto_id, tipo, cantidad, unidad) values
     -- Kit 1: Falso piso
@@ -182,6 +230,10 @@ insert into public.kit_productos (kit_id, producto_id, tipo, cantidad, unidad) v
     ('c0000000-0000-4000-8000-000000000005', 'b0000000-0000-4000-8000-000000000031', 'herramienta', 1, 'juego'),
     ('c0000000-0000-4000-8000-000000000005', 'b0000000-0000-4000-8000-000000000026', 'herramienta', 1, 'unidad'),
     ('c0000000-0000-4000-8000-000000000005', 'b0000000-0000-4000-8000-000000000032', 'herramienta', 1, 'unidad'),
-    ('c0000000-0000-4000-8000-000000000005', 'b0000000-0000-4000-8000-000000000033', 'maquinaria', 1, 'día');
+    ('c0000000-0000-4000-8000-000000000005', 'b0000000-0000-4000-8000-000000000033', 'maquinaria', 1, 'día')
+on conflict (kit_id, producto_id) do update set
+    tipo     = excluded.tipo,
+    cantidad = excluded.cantidad,
+    unidad   = excluded.unidad;
 
 commit;

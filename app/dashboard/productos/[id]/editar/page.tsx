@@ -27,6 +27,7 @@ interface ProductoEditar {
   unidad: string;
   stock: number;
   estado: "disponible" | "bajo stock" | "agotado";
+  imagen: string | null;
 }
 
 const opcionesEstado: { value: string; label: string }[] = [
@@ -43,6 +44,7 @@ interface FormState {
   stock: string;
   unidad: string;
   estado: string;
+  imagen: string;
 }
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
@@ -93,6 +95,7 @@ function ProductoForm({ id }: { id: string }) {
     stock: "",
     unidad: "",
     estado: "",
+    imagen: "",
   });
   const [productoNombre, setProductoNombre] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
@@ -104,7 +107,7 @@ function ProductoForm({ id }: { id: string }) {
       getSupabase()
         .from("productos")
         .select(
-          "id, nombre, categoria_id, descripcion, precio, unidad, stock, estado"
+          "id, nombre, categoria_id, descripcion, precio, unidad, stock, estado, imagen"
         )
         .eq("id", id)
         .maybeSingle()
@@ -131,6 +134,7 @@ function ProductoForm({ id }: { id: string }) {
           stock: String(producto.stock),
           unidad: producto.unidad,
           estado: producto.estado,
+          imagen: producto.imagen ?? "",
         });
         setCargando(false);
       })
@@ -231,6 +235,7 @@ function ProductoForm({ id }: { id: string }) {
         unidad: form.unidad.trim(),
         stock: Number(form.stock),
         estado: form.estado,
+        imagen: form.imagen.trim() || null,
       })
       .eq("id", id);
 
@@ -468,6 +473,27 @@ function ProductoForm({ id }: { id: string }) {
             {errors.descripcion && (
               <p className={errorClasses}>{errors.descripcion}</p>
             )}
+          </div>
+
+          <div className="mt-5">
+            <label htmlFor="imagen" className={labelClasses}>
+              URL de imagen{" "}
+              <span className="font-normal text-zinc-400">(opcional)</span>
+            </label>
+            <input
+              id="imagen"
+              name="imagen"
+              type="text"
+              value={form.imagen}
+              onChange={handleChange}
+              placeholder="Ej. https://images.unsplash.com/photo-... o https://tu-proyecto.supabase.co/storage/v1/object/public/..."
+              className={`${inputClasses} ${fieldErrorClasses(!!errors.imagen)}`}
+            />
+            <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+              Usa una URL completa https://... para que la imagen se muestre en
+              el catálogo.
+            </p>
+            {errors.imagen && <p className={errorClasses}>{errors.imagen}</p>}
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

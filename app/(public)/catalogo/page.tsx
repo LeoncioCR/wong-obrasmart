@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { getSupabase } from "@/lib/supabase/client";
 
 type Subcategoria =
@@ -20,6 +21,7 @@ interface ProductoCatalogo {
   precio: number;
   unidad: string;
   estado: "disponible" | "bajo stock" | "agotado";
+  imagen: string | null;
   categoriaNombre: string;
 }
 
@@ -31,6 +33,7 @@ interface FilaProducto {
   precio: number;
   unidad: string;
   estado: "disponible" | "bajo stock" | "agotado";
+  imagen: string | null;
   categorias: { nombre: string } | null;
 }
 
@@ -70,7 +73,7 @@ const fetchProductos = () =>
   getSupabase()
     .from("productos")
     .select(
-      "id, nombre, subcategoria, descripcion, precio, unidad, estado, categorias(nombre)",
+      "id, nombre, subcategoria, descripcion, precio, unidad, estado, imagen, categorias(nombre)",
     )
     .neq("estado", "agotado")
     .order("nombre", { ascending: true });
@@ -108,6 +111,7 @@ export default function CatalogoPage() {
             precio: p.precio,
             unidad: p.unidad,
             estado: p.estado,
+            imagen: p.imagen,
             categoriaNombre: p.categorias?.nombre ?? "—",
           })),
         );
@@ -232,26 +236,36 @@ export default function CatalogoPage() {
                   >
                     <div
                       aria-hidden
-                      className="flex aspect-[4/3] items-center justify-center bg-zinc-100 dark:bg-zinc-800"
+                      className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-zinc-100 dark:bg-zinc-800"
                     >
-                      <div className="flex flex-col items-center gap-2 text-zinc-400 dark:text-zinc-500">
-                        <svg
-                          className="h-8 w-8"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={1.5}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <rect x="3" y="3" width="18" height="18" rx="2" />
-                          <circle cx="9" cy="9" r="2" />
-                          <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                        </svg>
-                        <span className="text-xs font-medium">
-                          {producto.categoriaNombre}
-                        </span>
-                      </div>
+                      {producto.imagen ? (
+                        <Image
+                          src={producto.imagen}
+                          alt={producto.nombre}
+                          width={400}
+                          height={300}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center gap-2 text-zinc-400 dark:text-zinc-500">
+                          <svg
+                            className="h-8 w-8"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={1.5}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <circle cx="9" cy="9" r="2" />
+                            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                          </svg>
+                          <span className="text-xs font-medium">
+                            {producto.categoriaNombre}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex flex-1 flex-col p-5">

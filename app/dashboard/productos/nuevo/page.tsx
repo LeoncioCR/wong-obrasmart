@@ -32,6 +32,7 @@ interface FormState {
   stock: string;
   unidad: string;
   estado: string;
+  imagen: string;
 }
 
 const initialForm: FormState = {
@@ -42,6 +43,7 @@ const initialForm: FormState = {
   stock: "",
   unidad: "",
   estado: "",
+  imagen: "",
 };
 
 export default function NuevoProductoPage() {
@@ -144,6 +146,7 @@ export default function NuevoProductoPage() {
         unidad: form.unidad.trim(),
         stock: Number(form.stock),
         estado: form.estado,
+        imagen: form.imagen.trim() || null,
       });
 
     if (error) {
@@ -336,6 +339,27 @@ export default function NuevoProductoPage() {
             {errors.descripcion && (
               <p className={errorClasses}>{errors.descripcion}</p>
             )}
+          </div>
+
+          <div className="mt-5">
+            <label htmlFor="imagen" className={labelClasses}>
+              URL de imagen{" "}
+              <span className="font-normal text-zinc-400">(opcional)</span>
+            </label>
+            <input
+              id="imagen"
+              name="imagen"
+              type="text"
+              value={form.imagen}
+              onChange={handleChange}
+              placeholder="Ej. https://images.unsplash.com/photo-... o https://tu-proyecto.supabase.co/storage/v1/object/public/..."
+              className={`${inputClasses} ${fieldErrorClasses(!!errors.imagen)}`}
+            />
+            <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+              Usa una URL completa https://... para que la imagen se muestre en
+              el catálogo.
+            </p>
+            {errors.imagen && <p className={errorClasses}>{errors.imagen}</p>}
           </div>
 
           <div className="mt-8">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { enlaceWhatsapp } from "@/lib/whatsapp";
 import { getSupabase } from "@/lib/supabase/client";
 
@@ -49,7 +50,7 @@ export default function MaquinariaPage() {
     Promise.resolve(
       getSupabase()
         .from("maquinarias")
-        .select("id, nombre, descripcion, precio_dia, disponible")
+        .select("id, nombre, descripcion, precio_dia, disponible, imagen")
         .order("nombre", { ascending: true })
     )
       .then(({ data, error }) => {
@@ -64,6 +65,7 @@ export default function MaquinariaPage() {
               descripcion: string | null;
               precio_dia: number;
               disponible: boolean;
+              imagen: string | null;
             }[]).map(convertirMaquinaria)
           );
         }
@@ -187,24 +189,34 @@ export default function MaquinariaPage() {
               >
                 <div
                   aria-hidden
-                  className="flex aspect-[4/3] items-center justify-center bg-zinc-100 dark:bg-zinc-800"
+                  className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-zinc-100 dark:bg-zinc-800"
                 >
-                  <div className="flex flex-col items-center gap-2 text-zinc-400 dark:text-zinc-500">
-                    <svg
-                      className="h-8 w-8"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" />
-                      <path d="M6 12h4" />
-                      <circle cx="16" cy="12" r="2" />
-                    </svg>
-                    <span className="text-xs font-medium">Maquinaria</span>
-                  </div>
+                  {equipo.imagen ? (
+                    <Image
+                      src={equipo.imagen}
+                      alt={equipo.nombre}
+                      width={400}
+                      height={300}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 text-zinc-400 dark:text-zinc-500">
+                      <svg
+                        className="h-8 w-8"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" />
+                        <path d="M6 12h4" />
+                        <circle cx="16" cy="12" r="2" />
+                      </svg>
+                      <span className="text-xs font-medium">Maquinaria</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">

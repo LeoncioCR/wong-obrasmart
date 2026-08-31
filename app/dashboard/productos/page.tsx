@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { getSupabase } from "@/lib/supabase/client";
 
@@ -12,6 +13,7 @@ interface ProductoListado {
   precio: number;
   stock: number;
   unidad: string;
+  imagen: string | null;
   estado: "disponible" | "bajo stock" | "agotado";
 }
 
@@ -42,7 +44,7 @@ const fetchProductos = () =>
   getSupabase()
     .from("productos")
     .select(
-      "id, nombre, categoria_id, categorias(nombre), precio, stock, unidad, estado"
+      "id, nombre, categoria_id, categorias(nombre), precio, stock, unidad, estado, imagen"
     )
     .order("nombre", { ascending: true });
 
@@ -174,8 +176,30 @@ export default function ProductosPage() {
                         key={producto.id}
                         className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
                       >
-                        <td className="sticky left-0 bg-white px-5 py-3.5 font-medium text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
-                          {producto.nombre}
+                        <td className="sticky left-0 bg-white px-5 py-3.5 dark:bg-zinc-900">
+                          <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800">
+                              {producto.imagen ? (
+                                <Image
+                                  src={producto.imagen}
+                                  alt={producto.nombre}
+                                  width={40}
+                                  height={40}
+                                  className="h-10 w-10 object-cover"
+                                />
+                              ) : (
+                                <span
+                                  aria-hidden="true"
+                                  className="text-xs font-medium text-zinc-400 dark:text-zinc-500"
+                                >
+                                  {producto.nombre.slice(0, 1)}
+                                </span>
+                              )}
+                            </div>
+                            <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                              {producto.nombre}
+                            </span>
+                          </div>
                         </td>
                         <td className="px-5 py-3.5">
                           <span className="w-fit rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
