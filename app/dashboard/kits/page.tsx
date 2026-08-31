@@ -8,6 +8,7 @@ interface KitListado {
   id: string;
   nombre: string;
   tipo_obra: string;
+  precio_referencial: number;
   cantidadProductos: number;
   estado: "activo" | "inactivo";
 }
@@ -16,6 +17,7 @@ interface FilaKit {
   id: string;
   nombre: string;
   tipo_obra: string;
+  precio_referencial: number;
   estado: "activo" | "inactivo";
   kit_productos: { count: number }[];
 }
@@ -33,10 +35,17 @@ const estadoBadge = {
   },
 } as const;
 
+const formatPrecio = new Intl.NumberFormat("es-PE", {
+  style: "currency",
+  currency: "PEN",
+});
+
 const fetchKits = () =>
   getSupabase()
     .from("kits")
-    .select("id, nombre, tipo_obra, estado, kit_productos(count)")
+    .select(
+      "id, nombre, tipo_obra, precio_referencial, estado, kit_productos(count)"
+    )
     .order("nombre", { ascending: true });
 
 export default function KitsAdminPage() {
@@ -59,6 +68,7 @@ export default function KitsAdminPage() {
               id: kit.id,
               nombre: kit.nombre,
               tipo_obra: kit.tipo_obra,
+              precio_referencial: kit.precio_referencial,
               estado: kit.estado,
               cantidadProductos: kit.kit_productos?.[0]?.count ?? 0,
             }))
@@ -129,17 +139,19 @@ export default function KitsAdminPage() {
         ) : (
           <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[720px] text-left text-sm">
+              <table className="w-full min-w-[860px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
                     <th className="sticky left-0 z-10 px-5 py-3 font-medium">
                       Nombre
                     </th>
                     <th className="px-5 py-3 font-medium">Tipo de obra</th>
+                    <th className="px-5 py-3 font-medium">Precio referencial</th>
                     <th className="px-5 py-3 font-medium">
-                      Cantidad de productos
+                      Cantidad de ítems
                     </th>
                     <th className="px-5 py-3 font-medium">Estado</th>
+                    <th className="px-5 py-3 font-medium">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -161,7 +173,10 @@ export default function KitsAdminPage() {
                           {kit.tipo_obra}
                         </td>
                         <td className="px-5 py-3.5 text-zinc-700 dark:text-zinc-300">
-                          {kit.cantidadProductos} productos
+                          {formatPrecio.format(kit.precio_referencial)}
+                        </td>
+                        <td className="px-5 py-3.5 text-zinc-700 dark:text-zinc-300">
+                          {kit.cantidadProductos} ítems
                         </td>
                         <td className="px-5 py-3.5">
                           <span
@@ -169,6 +184,22 @@ export default function KitsAdminPage() {
                           >
                             {badge.label}
                           </span>
+                        </td>
+                        <td className="px-5 py-3.5">
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/dashboard/kits/${kit.id}`}
+                              className="inline-flex h-9 items-center justify-center rounded-full border border-zinc-300 px-3 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                            >
+                              Ver detalle
+                            </Link>
+                            <Link
+                              href={`/dashboard/kits/${kit.id}/editar`}
+                              className="inline-flex h-9 items-center justify-center rounded-full bg-red-600 px-3 text-xs font-semibold text-white transition-colors hover:bg-red-700"
+                            >
+                              Editar
+                            </Link>
+                          </div>
                         </td>
                       </tr>
                     );

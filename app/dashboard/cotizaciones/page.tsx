@@ -24,6 +24,7 @@ interface Cotizacion {
   codigo: string;
   cliente: string;
   tipoObra: string;
+  area: number | null;
   kit: string;
   fecha: string;
   total: number;
@@ -34,6 +35,7 @@ interface FilaCotizacion {
   id: string;
   codigo: string;
   tipo_obra: string;
+  area: number | null;
   fecha_emision: string;
   total: number;
   estado: EstadoCotizacion;
@@ -74,6 +76,10 @@ const formatPrecio = new Intl.NumberFormat("es-PE", {
   currency: "PEN",
 });
 
+const formatCantidad = new Intl.NumberFormat("es-PE", {
+  maximumFractionDigits: 2,
+});
+
 const obtenerFecha = (iso: string) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString("es-PE", {
     day: "2-digit",
@@ -85,7 +91,7 @@ const fetchCotizaciones = () =>
   getSupabase()
     .from("cotizaciones")
     .select(
-      "id, codigo, tipo_obra, fecha_emision, total, estado, clientes(nombre), kits(nombre)"
+      "id, codigo, tipo_obra, area, fecha_emision, total, estado, clientes(nombre), kits(nombre)"
     )
     .order("fecha_emision", { ascending: false });
 
@@ -94,6 +100,7 @@ const convertirFila = (fila: FilaCotizacion): Cotizacion => ({
   codigo: fila.codigo,
   cliente: fila.clientes?.nombre ?? "—",
   tipoObra: fila.tipo_obra,
+  area: fila.area ?? null,
   kit: fila.kits?.nombre ?? "—",
   fecha: obtenerFecha(fila.fecha_emision),
   total: fila.total,
@@ -214,7 +221,7 @@ export default function CotizacionesPage() {
         ) : (
           <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[820px] text-left text-sm">
+              <table className="w-full min-w-[920px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
                     <th className="sticky left-0 z-10 px-5 py-3 font-medium">
@@ -222,7 +229,7 @@ export default function CotizacionesPage() {
                     </th>
                     <th className="px-5 py-3 font-medium">Cliente</th>
                     <th className="px-5 py-3 font-medium">Tipo de obra</th>
-                    <th className="px-5 py-3 font-medium">Kit</th>
+                    <th className="px-5 py-3 font-medium">Área</th>
                     <th className="px-5 py-3 font-medium">Fecha</th>
                     <th className="px-5 py-3 font-medium">Total</th>
                     <th className="px-5 py-3 font-medium">Estado</th>
@@ -251,7 +258,9 @@ export default function CotizacionesPage() {
                           {cot.tipoObra}
                         </td>
                         <td className="px-5 py-3.5 text-zinc-600 dark:text-zinc-400">
-                          {cot.kit}
+                          {cot.area !== null
+                            ? `${formatCantidad.format(cot.area)} m²`
+                            : "—"}
                         </td>
                         <td className="px-5 py-3.5 text-zinc-600 dark:text-zinc-400">
                           {cot.fecha}

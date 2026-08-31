@@ -24,6 +24,7 @@ interface ProductoTop {
 }
 
 interface ClienteFrecuente {
+  id: string;
   nombre: string;
   cotizaciones: number;
   pedidos: number;
@@ -33,6 +34,7 @@ interface ClienteFrecuente {
 }
 
 interface MaquinaSolicitada {
+  maquinaria_id: string;
   nombre: string;
   solicitudes: number;
   dias: number;
@@ -70,7 +72,8 @@ function Barra({
 }
 
 const estadoClases: Record<string, string> = {
-  "bajo stock": "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400",
+  "bajo stock":
+    "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400",
   agotado: "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400",
 };
 
@@ -210,7 +213,7 @@ interface ResultadoConsulta<T> {
 }
 
 const ejecutar = async <T,>(
-  promesa: PromiseLike<{ data: T | null; error: { message: string } | null }>
+  promesa: PromiseLike<{ data: T | null; error: { message: string } | null }>,
 ): Promise<ResultadoConsulta<T>> => {
   try {
     const resultado = await Promise.resolve(promesa);
@@ -228,7 +231,10 @@ const ejecutar = async <T,>(
 };
 
 const contar = async (
-  promesa: PromiseLike<{ count: number | null; error: { message: string } | null }>
+  promesa: PromiseLike<{
+    count: number | null;
+    error: { message: string } | null;
+  }>,
 ): Promise<{ ok: boolean; valor: number; mensaje: string }> => {
   try {
     const resultado = await Promise.resolve(promesa);
@@ -303,7 +309,7 @@ export default function DataObraPage() {
   >([]);
   const [estadoPedidos, setEstadoPedidos] = useState<ContadorEstado[]>([]);
   const [estadoAlquileres, setEstadoAlquileres] = useState<ContadorEstado[]>(
-    []
+    [],
   );
   const [topProductos, setTopProductos] = useState<ProductoTop[]>([]);
   const [clientesFrecuentes, setClientesFrecuentes] = useState<
@@ -320,7 +326,7 @@ export default function DataObraPage() {
 
     const clasificar = (
       fila: FilaEstado[],
-      orden: [string, string][]
+      orden: [string, string][],
     ): ContadorEstado[] =>
       orden.map(([clave, label]) => ({
         clave,
@@ -336,22 +342,20 @@ export default function DataObraPage() {
         contar(
           supabase
             .from("clientes")
-            .select("id", { count: "exact", head: true })
+            .select("id", { count: "exact", head: true }),
         ),
         contar(
           supabase
             .from("cotizaciones")
-            .select("id", { count: "exact", head: true })
+            .select("id", { count: "exact", head: true }),
         ),
         contar(
-          supabase
-            .from("pedidos")
-            .select("id", { count: "exact", head: true })
+          supabase.from("pedidos").select("id", { count: "exact", head: true }),
         ),
         contar(
           supabase
             .from("alquileres")
-            .select("id", { count: "exact", head: true })
+            .select("id", { count: "exact", head: true }),
         ),
       ]);
       conteos.forEach((conteo) => {
@@ -359,9 +363,7 @@ export default function DataObraPage() {
       });
 
       const [estCot, estPed, estAlq] = await Promise.all([
-        ejecutar<FilaEstado[]>(
-          supabase.from("cotizaciones").select("estado")
-        ),
+        ejecutar<FilaEstado[]>(supabase.from("cotizaciones").select("estado")),
         ejecutar<FilaEstado[]>(supabase.from("pedidos").select("estado")),
         ejecutar<FilaEstado[]>(supabase.from("alquileres").select("estado")),
       ]);
@@ -374,13 +376,13 @@ export default function DataObraPage() {
           supabase
             .from("cotizacion_detalles")
             .select("producto_id, cotizacion_id, cantidad, productos(nombre)")
-            .not("producto_id", "is", null)
+            .not("producto_id", "is", null),
         ),
         ejecutar<FilaPedidoDetalle[]>(
           supabase
             .from("pedido_detalles")
             .select("producto_id, pedido_id, cantidad, productos(nombre)")
-            .not("producto_id", "is", null)
+            .not("producto_id", "is", null),
         ),
       ]);
       if (!cotDet.ok) errores.push(cotDet.mensaje);
@@ -388,17 +390,15 @@ export default function DataObraPage() {
 
       const [cots, peds, alqs, cli] = await Promise.all([
         ejecutar<FilaCotizacionCliente[]>(
-          supabase.from("cotizaciones").select("cliente_id, fecha_emision")
+          supabase.from("cotizaciones").select("cliente_id, fecha_emision"),
         ),
         ejecutar<FilaPedidoCliente[]>(
-          supabase.from("pedidos").select("cliente_id, fecha_pedido")
+          supabase.from("pedidos").select("cliente_id, fecha_pedido"),
         ),
         ejecutar<FilaAlquilerCliente[]>(
-          supabase.from("alquileres").select("cliente_id, fecha_inicio")
+          supabase.from("alquileres").select("cliente_id, fecha_inicio"),
         ),
-        ejecutar<FilaCliente[]>(
-          supabase.from("clientes").select("id, nombre")
-        ),
+        ejecutar<FilaCliente[]>(supabase.from("clientes").select("id, nombre")),
       ]);
       [cots, peds, alqs, cli].forEach((resultado) => {
         if (!resultado.ok) errores.push(resultado.mensaje);
@@ -408,14 +408,19 @@ export default function DataObraPage() {
         supabase
           .from("productos")
           .select("id, nombre, stock, unidad, estado")
-          .in("estado", ["bajo stock", "agotado"])
+          .in("estado", ["bajo stock", "agotado"]),
       );
       if (!productosStock.ok) errores.push(productosStock.mensaje);
+
+      const catalogoProductos = await ejecutar<{ id: string; nombre: string }[]>(
+        supabase.from("productos").select("id, nombre"),
+      );
+      if (!catalogoProductos.ok) errores.push(catalogoProductos.mensaje);
 
       const alqMaq = await ejecutar<FilaAlquilerMaquina[]>(
         supabase
           .from("alquileres")
-          .select("maquinaria_id, dias, maquinarias(nombre)")
+          .select("maquinaria_id, dias, maquinarias(nombre)"),
       );
       if (!alqMaq.ok) errores.push(alqMaq.mensaje);
 
@@ -434,17 +439,30 @@ export default function DataObraPage() {
       if (estAlq.ok)
         setEstadoAlquileres(clasificar(estAlq.data, ordenAlquileres));
 
+      const nombrePorProductoId = new Map<string, string>(
+        (catalogoProductos.ok ? catalogoProductos.data : []).map((p) => [
+          p.id,
+          p.nombre,
+        ]),
+      );
+
       const productosPorId = new Map<
         string,
         { nombre: string; cantidad: number; operaciones: Set<string> }
       >();
       const agregarProducto = (
-        fila: { producto_id: string | null; cantidad: number; parentId: string; nombre: string | null }[]
+        fila: {
+          producto_id: string | null;
+          cantidad: number;
+          parentId: string;
+        }[],
       ) => {
         fila.forEach((dato) => {
           if (!dato.producto_id) return;
+          const nombre = nombrePorProductoId.get(dato.producto_id);
+          if (!nombre) return;
           const actual = productosPorId.get(dato.producto_id) ?? {
-            nombre: dato.nombre ?? "Producto eliminado",
+            nombre,
             cantidad: 0,
             operaciones: new Set<string>(),
           };
@@ -459,8 +477,7 @@ export default function DataObraPage() {
             producto_id: dato.producto_id,
             cantidad: dato.cantidad,
             parentId: dato.cotizacion_id,
-            nombre: dato.productos?.[0]?.nombre ?? null,
-          }))
+          })),
         );
       }
       if (pedDet.ok) {
@@ -469,8 +486,7 @@ export default function DataObraPage() {
             producto_id: dato.producto_id,
             cantidad: dato.cantidad,
             parentId: dato.pedido_id,
-            nombre: dato.productos?.[0]?.nombre ?? null,
-          }))
+          })),
         );
       }
       setTopProductos(
@@ -481,13 +497,14 @@ export default function DataObraPage() {
             operaciones: item.operaciones.size,
           }))
           .sort((a, b) => b.cantidad - a.cantidad)
-          .slice(0, 10)
+          .slice(0, 10),
       );
 
       if (cots.ok && peds.ok && alqs.ok && cli.ok) {
         const mapaClientes = new Map<
           string,
           {
+            id: string;
             nombre: string;
             cotizaciones: number;
             pedidos: number;
@@ -497,6 +514,7 @@ export default function DataObraPage() {
         >();
         cli.data.forEach((cliente) => {
           mapaClientes.set(cliente.id, {
+            id: cliente.id,
             nombre: cliente.nombre,
             cotizaciones: 0,
             pedidos: 0,
@@ -528,6 +546,7 @@ export default function DataObraPage() {
         setClientesFrecuentes(
           [...mapaClientes.values()]
             .map((cliente) => ({
+              id: cliente.id,
               nombre: cliente.nombre,
               cotizaciones: cliente.cotizaciones,
               pedidos: cliente.pedidos,
@@ -544,28 +563,38 @@ export default function DataObraPage() {
             }))
             .filter((cliente) => cliente.total > 0)
             .sort((a, b) => b.total - a.total)
-            .slice(0, 10)
+            .slice(0, 10),
         );
       }
 
       if (productosStock.ok) {
-        const ordenados = [...productosStock.data].sort((a, b) => a.stock - b.stock);
+        const ordenados = [...productosStock.data].sort(
+          (a, b) => a.stock - b.stock,
+        );
         setBajoStock(
-          ordenados.filter((producto) => producto.estado === "bajo stock")
+          ordenados.filter((producto) => producto.estado === "bajo stock"),
         );
         setAgotados(
-          ordenados.filter((producto) => producto.estado === "agotado")
+          ordenados.filter((producto) => producto.estado === "agotado"),
         );
       }
 
       if (alqMaq.ok) {
         const mapaMaquinas = new Map<
           string,
-          { nombre: string; solicitudes: number; dias: number }
+          {
+            maquinaria_id: string;
+            nombre: string;
+            solicitudes: number;
+            dias: number;
+          }
         >();
         alqMaq.data.forEach((dato) => {
+          const nombre = dato.maquinarias?.[0]?.nombre;
+          if (!dato.maquinaria_id || !nombre) return;
           const actual = mapaMaquinas.get(dato.maquinaria_id) ?? {
-            nombre: dato.maquinarias?.[0]?.nombre ?? "Maquinaria eliminada",
+            maquinaria_id: dato.maquinaria_id,
+            nombre,
             solicitudes: 0,
             dias: 0,
           };
@@ -576,7 +605,7 @@ export default function DataObraPage() {
         setMaquinaSolicitada(
           [...mapaMaquinas.values()]
             .sort((a, b) => b.solicitudes - a.solicitudes)
-            .slice(0, 10)
+            .slice(0, 10),
         );
       }
 
@@ -608,7 +637,9 @@ export default function DataObraPage() {
 
         {errorCarga && (
           <div className="mt-6 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400">
-            <p className="font-medium">Algunas métricas no se pudieron calcular.</p>
+            <p className="font-medium">
+              Algunas métricas no se pudieron calcular.
+            </p>
             <p className="mt-1">{errorCarga}</p>
           </div>
         )}
@@ -656,8 +687,8 @@ export default function DataObraPage() {
                   Productos más solicitados
                 </h2>
                 <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-                  Suma de cantidades en cotizaciones y pedidos, con el número
-                  de operaciones distintas.
+                  Suma de cantidades en cotizaciones y pedidos, con el número de
+                  operaciones distintas.
                 </p>
               </div>
               {topProductos.length === 0 ? (
@@ -679,9 +710,9 @@ export default function DataObraPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {topProductos.map((producto) => (
+                      {topProductos.map((producto, index) => (
                         <tr
-                          key={producto.nombre}
+                          key={`${producto.nombre}-${index}`}
                           className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
                         >
                           <td className="px-6 py-3 font-medium text-zinc-900 dark:text-zinc-50">
@@ -741,7 +772,7 @@ export default function DataObraPage() {
                     <tbody>
                       {clientesFrecuentes.map((cliente) => (
                         <tr
-                          key={cliente.nombre}
+                          key={cliente.id}
                           className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
                         >
                           <td className="px-6 py-3 font-medium text-zinc-900 dark:text-zinc-50">
@@ -812,7 +843,7 @@ export default function DataObraPage() {
                     <tbody>
                       {maquinaSolicitada.map((maquina) => (
                         <tr
-                          key={maquina.nombre}
+                          key={maquina.maquinaria_id}
                           className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
                         >
                           <td className="px-6 py-3 font-medium text-zinc-900 dark:text-zinc-50">

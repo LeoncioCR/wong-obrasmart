@@ -5,6 +5,12 @@
 -- cotización con estado 'nueva' y guarda cada ítem del kit (materiales,
 -- herramientas, maquinaria) en cotizacion_detalles.
 --
+-- Vínculo con el catálogo:
+--   Por cada ítem se busca el producto en public.productos por nombre
+--   (sin distinguir mayúsculas, tildes ni espacios). Si existe, se guarda su
+--   id en cotizacion_detalles.producto_id; si no, queda NULL (nullable).
+--   Siempre se conservan descripcion y descripcion_producto como respaldo.
+--
 -- El total estimado es la suma de materiales + herramientas; la maquinaria
 -- se registra para referencia sin sumar el alquiler, consistente con el
 -- flujo KitObra IA ("No incluye alquiler de maquinaria").
@@ -13,11 +19,34 @@
 --
 -- p_items: jsonb con arreglo de objetos:
 --   { "tipo": "material"|"herramienta"|"maquinaria",
+--     "producto_id": uuid|null (id real de public.productos, opcional),
 --     "nombre": text, "cantidad": number, "unidad": text,
 --     "precio": number|null, "descripcion": text|null }
+-- Se usa producto_id si existe; si no, se resuelve por nombre.
 -- El "tipo" y la "descripcion" del catálogo se guardan en
 -- cotizacion_detalles.tipo / cotizacion_detalles.descripcion_producto.
 -- ============================================================================
+
+-- Función auxiliar de normalización (sin acentos, minúsculas, espacios únicos).
+-- Usa translate() que es nativa (no requiere extensión unaccent).
+create or replace function public.fn_normalizar_busqueda(p_texto text)
+returns text
+language sql
+immutable
+as $$
+    select btrim(regexp_replace(
+        lower(
+            translate(
+                coalesce(p_texto, ''),
+                'áàäâãéèëêíìïîóòöôõúùüûñç',
+                'aaaaaeeeeiiiiooooouuuunc'
+            )
+        ),
+        '\s+',
+        ' ',
+        'g'
+    ));
+$$;
 
 create or replace function public.enviar_cotizacion_kitobra(
     p_nombres       text,
@@ -44,6 +73,7 @@ declare
     v_item          jsonb;
     v_tipo          text;
     v_nombre        text;
+    v_producto_id   uuid;
     v_cantidad      numeric(12,4);
     v_unidad        text;
     v_precio        numeric(12,2);
@@ -113,13 +143,43 @@ begin
             else round(v_precio * v_cantidad, 2)
         end;
 
+        -- Producto real enviado por el cliente (id del catálogo). Se valida
+        -- que exista en public.productos; si no, se intenta resolver por nombre.
+        v_producto_id := nullif(v_item->>'producto_id', '')::uuid;
+        if v_producto_id is not null and not exists (
+            select 1 from public.productos p where p.id = v_producto_id
+        ) then
+            v_producto_id := null;
+        end if;
+
+        -- Si no se pudo usar el id (no enviado o inexistente), buscar por
+        -- nombre (coincidencia normalizada). Si no existe, producto_id queda NULL.
+        if v_producto_id is null and v_nombre <> '' then
+            select p.id into v_producto_id
+            from public.productos p
+            where public.fn_normalizar_busqueda(p.nombre) =
+                  public.fn_normalizar_busqueda(v_nombre)
+            limit 1;
+
+            -- Fallback: coincidencia parcial si no hubo coincidencia exacta
+            if v_producto_id is null then
+                select p.id into v_producto_id
+                from public.productos p
+                where public.fn_normalizar_busqueda(p.nombre) like
+                      '%' || public.fn_normalizar_busqueda(v_nombre) || '%'
+                   or public.fn_normalizar_busqueda(v_nombre) like
+                      '%' || public.fn_normalizar_busqueda(p.nombre) || '%'
+                limit 1;
+            end if;
+        end if;
+
         insert into public.cotizacion_detalles (
             cotizacion_id, producto_id, descripcion,
             cantidad, unidad, precio_unitario, subtotal,
             tipo, descripcion_producto
         )
         values (
-            v_cotizacion_id, null,
+            v_cotizacion_id, v_producto_id,
             v_nombre,
             v_cantidad, v_unidad, v_precio, v_subtotal,
             case

@@ -9,6 +9,7 @@ const formatPrecio = new Intl.NumberFormat("es-PE", {
 });
 
 interface TopItem {
+  id: string;
   nombre: string;
   total: number;
 }
@@ -230,6 +231,7 @@ const cargarDatos = async (desde: string, hasta: string): Promise<DatosDashboard
       if (!fila.producto_id || !fila.productos?.nombre) continue;
       const previo = cantidadesPorProducto.get(fila.producto_id)?.total ?? 0;
       cantidadesPorProducto.set(fila.producto_id, {
+        id: fila.producto_id,
         nombre: fila.productos.nombre,
         total: previo + Number(fila.cantidad),
       });
@@ -249,6 +251,7 @@ const cargarDatos = async (desde: string, hasta: string): Promise<DatosDashboard
     if (!fila.kit_id || !fila.kits?.nombre) continue;
     const previo = solicitudesPorKit.get(fila.kit_id)?.total ?? 0;
     solicitudesPorKit.set(fila.kit_id, {
+      id: fila.kit_id,
       nombre: fila.kits.nombre,
       total: previo + 1,
     });
@@ -611,7 +614,7 @@ export default function DashboardPage() {
                 <ul className="mt-4 space-y-3">
                   {data.topKits.map((kit, index) => (
                     <li
-                      key={kit.nombre}
+                      key={kit.id}
                       className="flex items-center gap-3 text-sm"
                     >
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-xs font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
@@ -641,7 +644,7 @@ export default function DashboardPage() {
                 <ul className="mt-4 space-y-3">
                   {data.topProductos.map((producto, index) => (
                     <li
-                      key={producto.nombre}
+                      key={producto.id}
                       className="flex items-center gap-3 text-sm"
                     >
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-xs font-bold text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">

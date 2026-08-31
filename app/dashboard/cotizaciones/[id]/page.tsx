@@ -23,6 +23,7 @@ interface ItemDetalle {
   id: string;
   nombre: string;
   descripcion: string | null;
+  descripcionProducto: string | null;
   cantidad: number;
   unidad: string;
   precio_unitario: number;
@@ -77,6 +78,7 @@ interface FilaCotizacion {
     subtotal: number;
     tipo: "material" | "herramienta" | "maquinaria" | null;
     descripcion_producto: string | null;
+    productos: { nombre: string } | null;
   }[];
 }
 
@@ -125,7 +127,7 @@ const fetchCotizacion = (codigo: string) =>
   getSupabase()
     .from("cotizaciones")
     .select(
-      "id, codigo, tipo_obra, area, presupuesto, descripcion_obra, observaciones, total, fecha_emision, estado, clientes(nombre, telefono, email, direccion), kits(nombre), cotizacion_detalles(id, descripcion, descripcion_producto, cantidad, unidad, precio_unitario, subtotal, tipo)"
+      "id, codigo, tipo_obra, area, presupuesto, descripcion_obra, observaciones, total, fecha_emision, estado, clientes(nombre, telefono, email, direccion), kits(nombre), cotizacion_detalles(id, descripcion, descripcion_producto, cantidad, unidad, precio_unitario, subtotal, tipo, productos(nombre))"
     )
     .eq("codigo", codigo)
     .maybeSingle();
@@ -146,13 +148,14 @@ function TablaDetalleItem({
   }
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[860px] text-left text-sm">
+      <table className="w-full min-w-[960px] text-left text-sm">
         <thead>
           <tr className="border-b border-zinc-200 bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
             <th className="sticky left-0 z-10 px-6 py-3 font-medium">
-              Nombre
+              Tipo
             </th>
             <th className="px-6 py-3 font-medium">Descripción</th>
+            <th className="px-6 py-3 font-medium">Desc. producto</th>
             <th className="px-6 py-3 font-medium">Cantidad</th>
             <th className="px-6 py-3 font-medium">Unidad</th>
             <th className="px-6 py-3 font-medium">Precio unitario</th>
@@ -160,31 +163,42 @@ function TablaDetalleItem({
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
-            <tr
-              key={item.id}
-              className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
-            >
-              <td className="sticky left-0 bg-white px-6 py-3 font-medium text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
-                {item.nombre}
-              </td>
-              <td className="max-w-[280px] px-6 py-3 text-zinc-600 dark:text-zinc-400">
-                {item.descripcion ?? "—"}
-              </td>
-              <td className="px-6 py-3 text-zinc-600 dark:text-zinc-400">
-                {formatCantidad.format(item.cantidad)}
-              </td>
-              <td className="px-6 py-3 text-zinc-600 dark:text-zinc-400">
-                {item.unidad}
-              </td>
-              <td className="px-6 py-3 text-zinc-600 dark:text-zinc-400">
-                {formatPrecio.format(item.precio_unitario)}
-              </td>
-              <td className="px-6 py-3 text-right font-medium text-zinc-900 dark:text-zinc-50">
-                {formatPrecio00.format(item.subtotal)}
-              </td>
-            </tr>
-          ))}
+          {items.map((item) => {
+            const tipoLabel =
+              item.tipo === "material"
+                ? "Material"
+                : item.tipo === "herramienta"
+                  ? "Herramienta"
+                  : "Maquinaria";
+            return (
+              <tr
+                key={item.id}
+                className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+              >
+                <td className="sticky left-0 bg-white px-6 py-3 font-medium text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
+                  {tipoLabel}
+                </td>
+                <td className="px-6 py-3 font-medium text-zinc-900 dark:text-zinc-50">
+                  {item.nombre}
+                </td>
+                <td className="max-w-[280px] px-6 py-3 text-zinc-600 dark:text-zinc-400">
+                  {item.descripcionProducto ?? "—"}
+                </td>
+                <td className="px-6 py-3 text-zinc-600 dark:text-zinc-400">
+                  {formatCantidad.format(item.cantidad)}
+                </td>
+                <td className="px-6 py-3 text-zinc-600 dark:text-zinc-400">
+                  {item.unidad}
+                </td>
+                <td className="px-6 py-3 text-zinc-600 dark:text-zinc-400">
+                  {formatPrecio.format(item.precio_unitario)}
+                </td>
+                <td className="px-6 py-3 text-right font-medium text-zinc-900 dark:text-zinc-50">
+                  {formatPrecio00.format(item.subtotal)}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -247,20 +261,21 @@ function DetalleContenido({ codigo }: { codigo: string }) {
         const items: ItemDetalle[] = (fila.cotizacion_detalles ?? []).map(
           (d) => {
             let tipo: ItemDetalle["tipo"] = d.tipo ?? "material";
-            let nombre = d.descripcion;
+            let nombre = d.productos?.nombre ?? d.descripcion;
             if (tipo === "material") {
               if (d.descripcion.startsWith("Herramienta: ")) {
                 tipo = "herramienta";
-                nombre = d.descripcion.slice("Herramienta: ".length);
+                nombre = d.productos?.nombre ?? d.descripcion.slice("Herramienta: ".length);
               } else if (d.descripcion.startsWith("Maquinaria: ")) {
                 tipo = "maquinaria";
-                nombre = d.descripcion.slice("Maquinaria: ".length);
+                nombre = d.productos?.nombre ?? d.descripcion.slice("Maquinaria: ".length);
               }
             }
             return {
               id: d.id,
               nombre,
-              descripcion: d.descripcion_producto ?? null,
+              descripcion: d.descripcion,
+              descripcionProducto: d.descripcion_producto ?? null,
               cantidad: d.cantidad,
               unidad: d.unidad,
               precio_unitario: d.precio_unitario,
