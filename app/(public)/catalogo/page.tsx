@@ -137,8 +137,9 @@ export default function CatalogoPage() {
   }, [busqueda, subcategoria, items]);
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <div className="flex flex-1 flex-col px-4 pb-20 pt-14 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-600 dark:text-red-500">WONG · Catálogo</p>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
@@ -169,7 +170,7 @@ export default function CatalogoPage() {
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por nombre..."
-              className="h-12 w-full rounded-full border border-zinc-300 bg-white pl-10 pr-4 text-sm text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-red-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
+              className="h-12 w-full rounded-xl border border-zinc-300 bg-white pl-10 pr-4 text-sm text-zinc-900 shadow-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-red-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50"
             />
           </label>
         </div>
@@ -182,10 +183,10 @@ export default function CatalogoPage() {
           <button
             type="button"
             onClick={() => setSubcategoria(null)}
-            className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
               subcategoria === null
-                ? "border-red-600 bg-red-600 text-white"
-                : "border-zinc-300 text-zinc-600 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-400"
+                ? "border-red-600 bg-red-600 text-white shadow-md shadow-red-600/20"
+                : "border-zinc-300 text-zinc-600 hover:border-red-600 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-400"
             }`}
           >
             Todos
@@ -200,10 +201,10 @@ export default function CatalogoPage() {
                 )
               }
               aria-pressed={subcategoria === cat.value}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+              className={`rounded-xl border px-4 py-2 text-sm font-medium transition-all ${
                 subcategoria === cat.value
-                  ? "border-red-600 bg-red-600 text-white"
-                  : "border-zinc-300 text-zinc-600 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-400"
+                  ? "border-red-600 bg-red-600 text-white shadow-md shadow-red-600/20"
+                  : "border-zinc-300 text-zinc-600 hover:border-red-600 hover:text-red-600 dark:border-zinc-700 dark:text-zinc-400"
               }`}
             >
               {cat.label}
@@ -232,7 +233,7 @@ export default function CatalogoPage() {
                 return (
                   <article
                     key={producto.id}
-                    className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-red-600/40 dark:border-zinc-800 dark:bg-zinc-900"
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 transition-all duration-300 hover:-translate-y-1 hover:border-red-600/50 hover:shadow-lg hover:shadow-red-600/10 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none dark:hover:border-red-500/30"
                   >
                     <div
                       aria-hidden
@@ -244,7 +245,7 @@ export default function CatalogoPage() {
                           alt={producto.nombre}
                           width={400}
                           height={300}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       ) : (
                         <div className="flex flex-col items-center gap-2 text-zinc-400 dark:text-zinc-500">

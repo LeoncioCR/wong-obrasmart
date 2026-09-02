@@ -236,12 +236,12 @@ function KitContenido({ id }: { id: string }) {
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             Kit no encontrado
           </h1>
-          <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
             No existe un kit con el id &quot;{id}&quot;.
           </p>
           <Link
             href="/dashboard/kits"
-            className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+            className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-red-600 px-8 text-base font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
           >
             Volver a kits
           </Link>
@@ -257,12 +257,12 @@ function KitContenido({ id }: { id: string }) {
           <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             No se pudo cargar el kit
           </h1>
-          <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
             {errorCarga}
           </p>
           <Link
             href="/dashboard/kits"
-            className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+            className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-red-600 px-8 text-base font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
           >
             Volver a kits
           </Link>
@@ -278,8 +278,8 @@ function KitContenido({ id }: { id: string }) {
   };
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-5xl">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <Link
           href="/dashboard/kits"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
@@ -312,16 +312,16 @@ function KitContenido({ id }: { id: string }) {
             </div>
             <Link
               href={`/dashboard/kits/${kit.id}/editar`}
-              className="inline-flex h-10 items-center justify-center rounded-full bg-red-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+              className="inline-flex h-10 items-center justify-center rounded-xl bg-red-600 px-5 text-sm font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
             >
               Editar kit
             </Link>
           </div>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+          <h1 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
             {kit.nombre}
           </h1>
           {kit.descripcion ? (
-            <p className="mt-3 max-w-3xl text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1.5 max-w-3xl text-base leading-7 text-zinc-600 dark:text-zinc-400">
               {kit.descripcion}
             </p>
           ) : null}

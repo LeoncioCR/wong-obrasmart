@@ -307,8 +307,8 @@ function DetalleContenido({ codigo }: { codigo: string }) {
   }
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-4xl">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
         <Link
           href="/dashboard/alquileres"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
@@ -332,7 +332,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
             <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
               Alquiler
             </p>
-            <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+            <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
               {detalle.codigo}
             </h1>
           </div>
@@ -353,7 +353,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
                   void cambiarEstado(e.target.value as EstadoAlquiler)
                 }
                 disabled={actualizando}
-                className="h-10 w-44 cursor-pointer rounded-full border border-zinc-300 bg-white px-4 text-xs font-semibold text-zinc-700 outline-none transition-colors focus:border-red-600 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+                className="h-10 w-44 cursor-pointer rounded-xl border border-zinc-300 bg-white px-4 text-xs font-semibold text-zinc-700 shadow-sm outline-none transition-colors focus:border-red-600 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
               >
                 {estados.map((estado) => (
                   <option key={estado} value={estado}>
@@ -429,7 +429,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
         ) : null}
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Cliente
             </h2>
@@ -461,7 +461,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
             </dl>
           </section>
 
-          <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Información del alquiler
             </h2>
@@ -504,7 +504,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
           </section>
         </div>
 
-        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Maquinaria
@@ -520,7 +520,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
           </div>
         </section>
 
-        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Resumen

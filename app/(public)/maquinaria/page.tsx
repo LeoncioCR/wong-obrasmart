@@ -152,16 +152,14 @@ export default function MaquinariaPage() {
   const equiposDisponibles = equipos.filter((item) => item.disponible);
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="rounded-full bg-red-600 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white">
-            RentaMicro
-          </span>
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
-            Maquinaria
-          </h1>
-        </div>
+    <div className="flex flex-1 flex-col px-4 pb-20 pt-14 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-600 dark:text-red-500">
+          WONG · RentaMicro
+        </p>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+          Maquinaria
+        </h1>
         <p className="mt-3 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
           Equipos disponibles bajo demanda para tu micro-obra, sin inversión
           inicial.
@@ -185,11 +183,11 @@ export default function MaquinariaPage() {
             {equipos.map((equipo) => (
               <article
                 key={equipo.id}
-                className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-red-600/40 dark:border-zinc-800 dark:bg-zinc-900"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 transition-all duration-300 hover:-translate-y-1 hover:border-red-600/50 hover:shadow-lg hover:shadow-red-600/10 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none dark:hover:border-red-500/30"
               >
                 <div
                   aria-hidden
-                  className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-zinc-100 dark:bg-zinc-800"
+                  className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-zinc-100 transition-transform duration-300 group-hover:scale-105 dark:bg-zinc-800"
                 >
                   {equipo.imagen ? (
                     <Image
@@ -250,7 +248,7 @@ export default function MaquinariaPage() {
                     {equipo.disponible ? (
                       <a
                         href="#solicitar"
-                        className="inline-flex h-10 items-center justify-center rounded-full bg-red-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+                        className="inline-flex h-10 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-5 text-sm font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40"
                       >
                         Solicitar
                       </a>
@@ -369,7 +367,7 @@ export default function MaquinariaPage() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-8 text-base font-semibold text-white transition-colors hover:bg-[#1ebe5b]"
+                className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-8 text-base font-semibold text-white shadow-md shadow-emerald-500/30 transition-all hover:bg-[#1ebe5b] hover:shadow-lg hover:shadow-emerald-500/40"
               >
                 <svg
                   className="h-5 w-5"
@@ -383,7 +381,7 @@ export default function MaquinariaPage() {
               <button
                 type="button"
                 onClick={() => setConfirmado(null)}
-                className="mt-4 inline-flex h-12 w-full items-center justify-center rounded-full border border-emerald-300 px-8 text-base font-semibold text-emerald-800 transition-colors hover:bg-emerald-100 sm:w-auto dark:border-emerald-500/50 dark:text-emerald-300 dark:hover:bg-emerald-500/10"
+                className="mt-4 inline-flex h-12 w-full items-center justify-center rounded-xl border border-emerald-300 px-8 text-base font-semibold text-emerald-800 transition-colors hover:bg-emerald-100 sm:w-auto dark:border-emerald-500/50 dark:text-emerald-300 dark:hover:bg-emerald-500/10"
               >
                 Enviar otra solicitud
               </button>
@@ -391,7 +389,7 @@ export default function MaquinariaPage() {
           ) : (
             <form
               onSubmit={(e) => void enviar(e)}
-              className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900"
+              className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none"
             >
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <div>
@@ -492,7 +490,7 @@ export default function MaquinariaPage() {
                 <button
                   type="submit"
                   disabled={enviando}
-                  className="inline-flex h-12 w-full items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                  className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-8 text-base font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                 >
                   {enviando ? "Enviando..." : "Solicitar alquiler"}
                 </button>

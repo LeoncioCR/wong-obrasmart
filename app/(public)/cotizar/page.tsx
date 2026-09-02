@@ -261,7 +261,7 @@ export default function CotizarPage() {
           </p>
 
           {preparandoMensaje ? (
-            <span className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#25D366]/70 px-8 text-base font-semibold text-white">
+            <span           className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-[#25D366]/70 px-8 text-base font-semibold text-white">
               Preparando mensaje...
             </span>
           ) : (
@@ -269,7 +269,7 @@ export default function CotizarPage() {
               href={enlaceWhatsapp(mensajeWhatsapp)}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-8 text-base font-semibold text-white transition-colors hover:bg-[#1ebe5b]"
+              className="mt-8 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-8 text-base font-semibold text-white transition-colors hover:bg-[#1ebe5b]"
             >
               <svg
                 className="h-5 w-5"
@@ -290,7 +290,7 @@ export default function CotizarPage() {
               setCodigo("");
               setResumenKit(null);
             }}
-            className="mt-4 inline-flex h-12 items-center justify-center rounded-full border border-zinc-300 px-8 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
+            className="mt-4 inline-flex h-12 items-center justify-center rounded-xl border border-zinc-300 px-8 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
           >
             Enviar otra solicitud
           </button>
@@ -300,8 +300,11 @@ export default function CotizarPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
+    <div className="flex flex-1 flex-col px-4 pb-20 pt-14 sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-3xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-600 dark:text-red-500">
+          WONG · Cotiza
+        </p>
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
           Cotizar mi obra
         </h1>
@@ -323,7 +326,7 @@ export default function CotizarPage() {
             e.preventDefault();
             enviar();
           }}
-          className="mt-10 rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900"
+          className="mt-10 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none"
         >
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
@@ -478,7 +481,7 @@ export default function CotizarPage() {
             <button
               type="submit"
               disabled={procesando}
-              className="inline-flex h-12 w-full items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-8 text-base font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:from-red-600 disabled:hover:to-red-500 disabled:hover:shadow-md disabled:hover:shadow-red-600/30 sm:w-auto"
             >
               {procesando ? "Enviando..." : "Enviar solicitud"}
             </button>

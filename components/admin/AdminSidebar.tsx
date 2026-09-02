@@ -15,16 +15,34 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex items-baseline gap-1.5 px-6 py-5">
-        <span className="text-lg font-extrabold uppercase tracking-tight text-zinc-900 dark:text-zinc-50">
-          WONG
-        </span>
-        <span className="text-lg font-semibold text-red-600 dark:text-red-500">
-          ObraSmart
-        </span>
+    <div className="flex h-full flex-col bg-gradient-to-b from-zinc-950 via-zinc-950 to-red-950/90 dark:from-zinc-950 dark:via-zinc-950 dark:to-zinc-950">
+      <div className="flex items-center gap-2 px-6 py-6">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-600 shadow-lg shadow-red-600/40">
+          <svg
+            className="h-6 w-6 text-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M2 20h20" />
+            <path d="M4 20V9l4-3v14" />
+            <path d="M8 20V6l4-3v17" />
+            <path d="M12 20V8l4-2v14" />
+            <path d="M16 20V4l4 2v14" />
+          </svg>
+        </div>
+        <div className="flex flex-col leading-tight">
+          <span className="text-base font-extrabold uppercase tracking-tight text-white">
+            WONG
+          </span>
+          <span className="text-xs font-semibold text-red-400">ObraSmart</span>
+        </div>
       </div>
-      <p className="px-6 pb-2 text-xs font-medium uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+
+      <p className="px-6 pb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">
         Panel administrativo
       </p>
 
@@ -40,22 +58,40 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
               href={item.href}
               onClick={onNavigate}
               aria-current={isActive ? "page" : undefined}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
                 isActive
-                  ? "bg-red-600 text-white"
-                  : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                  ? "bg-red-600/15 text-white"
+                  : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
               }`}
             >
-              {item.icon}
+              {isActive && (
+                <span className="absolute inset-y-2 left-0 w-1 rounded-r-full bg-red-500" />
+              )}
+              <span
+                className={`transition-colors ${
+                  isActive
+                    ? "text-red-400"
+                    : "text-zinc-500 group-hover:text-zinc-300"
+                }`}
+              >
+                {item.icon}
+              </span>
               {item.label}
             </Link>
           );
         })}
       </nav>
 
-      <p className="px-6 py-4 text-xs text-zinc-400 dark:text-zinc-500">
-        WONG ObraSmart · Admin v0.1
-      </p>
+      <div className="border-t border-white/10 px-6 py-4">
+        <p className="flex items-center gap-2 text-xs text-zinc-500">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          Sistema operativo
+        </p>
+        <p className="mt-1 text-xs text-zinc-600">WONG ObraSmart · Admin v0.1</p>
+      </div>
     </div>
   );
 }
@@ -90,13 +126,13 @@ export default function AdminSidebar({
         className={`hidden lg:sticky lg:top-0 lg:block lg:h-screen ${className}`}
         aria-label="Menú administrativo"
       >
-        <div className="h-full w-64 border-r border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="flex h-full w-64 flex-col">
           <SidebarContent />
         </div>
       </aside>
 
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transition-transform dark:bg-zinc-950 lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 transition-transform lg:hidden ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
         aria-hidden={!open}

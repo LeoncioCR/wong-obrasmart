@@ -258,12 +258,12 @@ function DetalleContenido({ id }: { id: string }) {
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           Cliente no encontrado
         </h1>
-        <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
           No existe un cliente con ese identificador.
         </p>
         <Link
           href="/dashboard/clientes"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-red-600 px-8 text-base font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
         >
           Volver a clientes
         </Link>
@@ -277,12 +277,12 @@ function DetalleContenido({ id }: { id: string }) {
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           No se pudo cargar el cliente
         </h1>
-        <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
           {errorCarga}
         </p>
         <Link
           href="/dashboard/clientes"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-red-600 px-8 text-base font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
         >
           Volver a clientes
         </Link>
@@ -299,8 +299,8 @@ function DetalleContenido({ id }: { id: string }) {
   ];
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-4xl">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <Link
           href="/dashboard/clientes"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
@@ -323,7 +323,7 @@ function DetalleContenido({ id }: { id: string }) {
           <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
             Cliente
           </p>
-          <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
             {cliente.nombre}
           </h1>
           <p className="mt-2 text-base text-zinc-600 dark:text-zinc-400">
@@ -332,7 +332,7 @@ function DetalleContenido({ id }: { id: string }) {
           </p>
         </div>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Resumen de operaciones
@@ -352,7 +352,7 @@ function DetalleContenido({ id }: { id: string }) {
           </div>
         </div>
 
-        <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
             Datos personales
           </h2>
@@ -392,7 +392,7 @@ function DetalleContenido({ id }: { id: string }) {
           </dl>
         </section>
 
-        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Cotizaciones del cliente
@@ -448,7 +448,7 @@ function DetalleContenido({ id }: { id: string }) {
           )}
         </section>
 
-        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Pedidos del cliente
@@ -500,7 +500,7 @@ function DetalleContenido({ id }: { id: string }) {
           )}
         </section>
 
-        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Alquileres del cliente

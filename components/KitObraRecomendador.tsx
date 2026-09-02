@@ -333,7 +333,7 @@ export default function KitObraRecomendador() {
   };
 
   return (
-    <section className="mt-10 rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900">
+    <section className="mt-10 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
       <div className="flex flex-wrap items-center gap-3">
         <span className="rounded-full bg-red-600 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white">
           KitObra IA
@@ -447,7 +447,7 @@ export default function KitObraRecomendador() {
             type="button"
             onClick={generar}
             disabled={generando}
-            className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-red-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-6 inline-flex h-11 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-6 text-sm font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {generando ? "Generando..." : "Generar recomendación IA"}
           </button>
@@ -564,7 +564,7 @@ export default function KitObraRecomendador() {
               </button>
 
               {agregandoProducto && (
-                <div className="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-950">
+                <div className="mt-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-none">
                   <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
                     Agregar producto del catálogo
                   </p>
@@ -629,7 +629,7 @@ export default function KitObraRecomendador() {
                     <button
                       type="button"
                       onClick={agregarProductoManual}
-                      className="inline-flex h-10 items-center justify-center rounded-full bg-red-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+                      className="inline-flex h-10 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-5 text-sm font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40"
                     >
                       Agregar al kit
                     </button>
@@ -713,7 +713,7 @@ export default function KitObraRecomendador() {
                 )}
               </div>
 
-              <div className="rounded-2xl bg-zinc-50 p-4 dark:bg-zinc-950">
+              <div className="rounded-2xl bg-zinc-50 p-4 shadow-sm shadow-zinc-200/40 dark:bg-zinc-950 dark:shadow-none">
                 <p className="text-xs text-zinc-500 dark:text-zinc-400">
                   Precio estimado
                 </p>
@@ -776,7 +776,7 @@ export default function KitObraRecomendador() {
                 e.preventDefault();
                 cotizarKit();
               }}
-              className="mt-6 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-950"
+              className="mt-6 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-none"
             >
               <p className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
                 Cotizar kit
@@ -850,7 +850,7 @@ export default function KitObraRecomendador() {
                 <button
                   type="submit"
                   disabled={enviandoCotizacion}
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-red-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex h-11 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-6 text-sm font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {enviandoCotizacion
                     ? "Guardando..."
@@ -878,7 +878,7 @@ export default function KitObraRecomendador() {
                   setCodigoCreado("");
                   setMostrarCotizacion(true);
                 }}
-                className="inline-flex h-11 items-center justify-center rounded-full bg-red-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+                className="inline-flex h-11 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-6 text-sm font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40"
               >
                 Cotizar kit
               </button>

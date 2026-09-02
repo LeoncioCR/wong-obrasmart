@@ -197,12 +197,12 @@ export default function NuevoKitPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-3xl">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
           Nuevo kit
         </h1>
-        <p className="mt-3 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1.5 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
           Arma un kit de obra seleccionando productos. Se guardará en la base
           de datos.
         </p>
@@ -220,7 +220,7 @@ export default function NuevoKitPage() {
             e.preventDefault();
             guardar();
           }}
-          className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900"
+          className="mt-8 rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none"
         >
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
@@ -332,7 +332,7 @@ export default function NuevoKitPage() {
                 type="button"
                 onClick={agregarProducto}
                 disabled={!productoActual}
-                className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-red-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-500"
+                className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-red-600 px-6 text-sm font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:shadow-md hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-zinc-200 disabled:text-zinc-400 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-500"
               >
                 Agregar producto
               </button>
@@ -428,7 +428,7 @@ export default function NuevoKitPage() {
             <button
               type="submit"
               disabled={procesando}
-              className="inline-flex h-12 w-full items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-red-600 px-8 text-base font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:shadow-md hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
               {procesando ? "Guardando..." : "Registrar kit"}
             </button>

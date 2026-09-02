@@ -276,14 +276,14 @@ const [errorEliminar, setErrorEliminar] = useState("");
   };
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
               Clientes
             </h1>
-            <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
               {cargando
                 ? "Cargando clientes..."
                 : errorSupabase
@@ -318,7 +318,7 @@ const [errorEliminar, setErrorEliminar] = useState("");
             <button
               type="button"
               onClick={abrirNuevo}
-              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-red-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-red-600 px-6 text-sm font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:shadow-md hover:bg-red-700"
             >
               <svg
                 className="h-4 w-4"
@@ -350,7 +350,7 @@ const [errorEliminar, setErrorEliminar] = useState("");
             <button
               type="button"
               onClick={() => setErrorEliminar("")}
-              className="rounded-full border border-red-300 px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-red-100 dark:border-red-500/50 dark:hover:bg-red-500/10"
+              className="rounded-xl border border-red-300 px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-red-100 dark:border-red-500/50 dark:hover:bg-red-500/10"
             >
               Cerrar
             </button>
@@ -358,15 +358,15 @@ const [errorEliminar, setErrorEliminar] = useState("");
         )}
 
         {cargando ? (
-          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none dark:text-zinc-400">
             Cargando clientes...
           </div>
         ) : items.length === 0 && !errorSupabase ? (
-          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none dark:text-zinc-400">
             No hay clientes registrados.
           </div>
         ) : (
-          <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[900px] text-left text-sm">
                 <thead>
@@ -385,7 +385,7 @@ const [errorEliminar, setErrorEliminar] = useState("");
                   {filtrados.map((cliente) => (
                     <tr
                       key={cliente.id}
-                      className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+                      className="border-b border-zinc-100 transition-colors hover:bg-zinc-50/50 last:border-0 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
                     >
                       <td className="sticky left-0 bg-white px-5 py-3.5 font-medium text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
                         {cliente.nombre}
@@ -545,14 +545,14 @@ const [errorEliminar, setErrorEliminar] = useState("");
                     type="button"
                     onClick={() => setModalForm(null)}
                     disabled={procesando}
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-300 px-6 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
+                    className="inline-flex h-11 items-center justify-center rounded-xl border border-zinc-300 px-6 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
                     disabled={procesando}
-                    className="inline-flex h-11 items-center justify-center rounded-full bg-red-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex h-11 items-center justify-center rounded-xl bg-red-600 px-6 text-sm font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:shadow-md hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {procesando
                       ? "Guardando..."

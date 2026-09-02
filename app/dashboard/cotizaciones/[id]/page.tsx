@@ -344,12 +344,12 @@ function DetalleContenido({ codigo }: { codigo: string }) {
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           Cotización no encontrada
         </h1>
-        <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
           No existe una cotización con el código &quot;{codigo}&quot;.
         </p>
         <Link
           href="/dashboard/cotizaciones"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-red-600 px-8 text-base font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
         >
           Volver a cotizaciones
         </Link>
@@ -363,12 +363,12 @@ function DetalleContenido({ codigo }: { codigo: string }) {
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
           No se pudo cargar la cotización
         </h1>
-        <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
           {errorCarga}
         </p>
         <Link
           href="/dashboard/cotizaciones"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-red-600 px-8 text-base font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
         >
           Volver a cotizaciones
         </Link>
@@ -381,8 +381,8 @@ function DetalleContenido({ codigo }: { codigo: string }) {
   const maquinaria = detalle.items.filter((i) => i.tipo === "maquinaria");
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-4xl">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <Link
           href="/dashboard/cotizaciones"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
@@ -406,7 +406,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
             <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
               Cotización
             </p>
-            <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+            <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
               {detalle.codigo}
             </h1>
           </div>
@@ -461,7 +461,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Datos de la cotización
             </h2>
@@ -493,7 +493,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
             </dl>
           </section>
 
-          <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Cliente
             </h2>
@@ -574,7 +574,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
           </dl>
         </section>
 
-        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Productos
@@ -597,7 +597,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
         </section>
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Herramientas seleccionadas
             </h2>
@@ -607,7 +607,7 @@ function DetalleContenido({ codigo }: { codigo: string }) {
             />
           </section>
 
-          <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Maquinaria seleccionada
             </h2>

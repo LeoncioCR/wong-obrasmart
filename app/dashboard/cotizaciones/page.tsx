@@ -164,14 +164,14 @@ export default function CotizacionesPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
               Cotizaciones
             </h1>
-            <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
               {cargando
                 ? "Cargando cotizaciones..."
                 : errorSupabase
@@ -211,15 +211,15 @@ export default function CotizacionesPage() {
         )}
 
         {cargando ? (
-          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none dark:text-zinc-400">
             Cargando cotizaciones...
           </div>
         ) : items.length === 0 && !errorSupabase ? (
-          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+          <div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none dark:text-zinc-400">
             No hay cotizaciones registradas.
           </div>
         ) : (
-          <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[920px] text-left text-sm">
                 <thead>
@@ -246,7 +246,7 @@ export default function CotizacionesPage() {
                     return (
                       <tr
                         key={cot.id}
-                        className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+                        className="border-b border-zinc-100 transition-colors hover:bg-zinc-50/50 last:border-0 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
                       >
                         <td className="sticky left-0 bg-white px-5 py-3.5 font-medium text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
                           {cot.codigo}

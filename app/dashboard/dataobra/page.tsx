@@ -85,7 +85,7 @@ function TablaProductosAlerta({
   productos: ProductoAlerta[];
 }) {
   return (
-    <section className="overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+    <section className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
       <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
           {titulo}
@@ -111,7 +111,7 @@ function TablaProductosAlerta({
               {productos.map((producto) => (
                 <tr
                   key={producto.id}
-                  className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+                  className="border-b border-zinc-100 last:border-0 transition-colors hover:bg-zinc-50/50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
                 >
                   <td className="sticky left-0 bg-white px-6 py-3 font-medium text-zinc-900 dark:bg-zinc-900 dark:text-zinc-50">
                     {producto.nombre}
@@ -150,7 +150,7 @@ function SeccionEstados({
   const maximo = Math.max(1, ...items.map((item) => item.total));
 
   return (
-    <section className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+    <section className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
       <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
         {titulo}
       </h2>
@@ -626,12 +626,12 @@ export default function DataObraPage() {
   ];
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
           DataObra
         </h1>
-        <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
           Panel de analítica en tiempo real con datos de la base de datos.
         </p>
 
@@ -654,7 +654,7 @@ export default function DataObraPage() {
               {kpisResumen.map((kpi) => (
                 <div
                   key={kpi.label}
-                  className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900"
+                  className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none"
                 >
                   <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
                     {kpi.label}
@@ -681,7 +681,7 @@ export default function DataObraPage() {
               />
             </div>
 
-            <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+            <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
               <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
                   Productos más solicitados
@@ -713,7 +713,7 @@ export default function DataObraPage() {
                       {topProductos.map((producto, index) => (
                         <tr
                           key={`${producto.nombre}-${index}`}
-                          className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+                          className="border-b border-zinc-100 last:border-0 transition-colors hover:bg-zinc-50/50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
                         >
                           <td className="px-6 py-3 font-medium text-zinc-900 dark:text-zinc-50">
                             {producto.nombre}
@@ -732,7 +732,7 @@ export default function DataObraPage() {
               )}
             </section>
 
-            <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+            <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
               <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
                   Clientes frecuentes
@@ -773,7 +773,7 @@ export default function DataObraPage() {
                       {clientesFrecuentes.map((cliente) => (
                         <tr
                           key={cliente.id}
-                          className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+                          className="border-b border-zinc-100 last:border-0 transition-colors hover:bg-zinc-50/50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
                         >
                           <td className="px-6 py-3 font-medium text-zinc-900 dark:text-zinc-50">
                             {cliente.nombre}
@@ -812,7 +812,7 @@ export default function DataObraPage() {
               />
             </div>
 
-            <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+            <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
               <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
                   Maquinaria más solicitada
@@ -844,7 +844,7 @@ export default function DataObraPage() {
                       {maquinaSolicitada.map((maquina) => (
                         <tr
                           key={maquina.maquinaria_id}
-                          className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+                          className="border-b border-zinc-100 last:border-0 transition-colors hover:bg-zinc-50/50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
                         >
                           <td className="px-6 py-3 font-medium text-zinc-900 dark:text-zinc-50">
                             {maquina.nombre}

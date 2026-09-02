@@ -50,8 +50,11 @@ export default function LoginPage() {
   return (
     <main className="flex flex-1 flex-col justify-center bg-zinc-50 px-4 py-16 sm:px-6 lg:px-8 dark:bg-black">
       <div className="mx-auto w-full max-w-md">
-        <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="rounded-2xl border border-zinc-200 bg-white p-8 shadow-lg shadow-zinc-200/60 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
           <Link href="/" className="flex flex-col items-center text-center">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-600">
+              WONG · ObraSmart
+            </p>
             <span className="text-xl font-extrabold leading-none tracking-tight text-zinc-900 dark:text-zinc-50">
               WONG <span className="text-red-600">ObraSmart</span>
             </span>
@@ -109,7 +112,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={enviando}
-              className="h-12 w-full rounded-full bg-red-600 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="h-12 w-full rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-sm font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {enviando ? "Ingresando..." : "Iniciar sesión"}
             </button>

@@ -65,7 +65,7 @@ function ItemList({ items, title }: { items: KitItem[]; title: string }) {
         {items.map((item) => (
           <li
             key={item.id}
-            className="flex items-center justify-between gap-4 rounded-xl border border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900"
+            className="flex items-center justify-between gap-4 rounded-xl border border-zinc-200 bg-white px-4 py-3 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none"
           >
             <span className="text-sm text-zinc-700 dark:text-zinc-300">
               {item.nombre}
@@ -184,7 +184,7 @@ function KitContenido({ id }: { id: string }) {
         </p>
         <Link
           href="/kits"
-          className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+          className="mt-8 inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-8 text-base font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40"
         >
           Volver a kits
         </Link>
@@ -212,8 +212,8 @@ function KitContenido({ id }: { id: string }) {
   }
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-4xl">
+    <div className="flex flex-1 flex-col px-4 pb-20 pt-14 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <Link
           href="/kits"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 transition-colors hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-500"
@@ -233,6 +233,9 @@ function KitContenido({ id }: { id: string }) {
         </Link>
 
         <div className="mt-6">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-600 dark:text-red-500">
+            WONG · Kit
+          </p>
           <span className="w-fit rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
             {kit.tipo_obra}
           </span>
@@ -243,7 +246,7 @@ function KitContenido({ id }: { id: string }) {
             {kit.descripcion}
           </p>
 
-          <div className="mt-6 flex flex-col gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-6 flex flex-col gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm shadow-zinc-200/40 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <div>
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Precio estimado
@@ -254,7 +257,7 @@ function KitContenido({ id }: { id: string }) {
             </div>
             <Link
               href="/cotizar"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700"
+              className="inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-8 text-base font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40"
             >
               Solicitar cotización
             </Link>

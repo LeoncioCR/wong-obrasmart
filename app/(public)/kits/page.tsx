@@ -49,8 +49,9 @@ export default function KitsPage() {
   }, []);
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <div className="flex flex-1 flex-col px-4 pb-20 pt-14 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-600 dark:text-red-500">WONG · Kits</p>
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
           Kits
         </h1>
@@ -79,7 +80,7 @@ export default function KitsPage() {
             {items.map((kit) => (
               <article
                 key={kit.id}
-                className="flex flex-col rounded-2xl border border-zinc-200 bg-white p-6 transition-colors hover:border-red-600/40 dark:border-zinc-800 dark:bg-zinc-900"
+                className="group flex flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 transition-all duration-300 hover:-translate-y-1 hover:border-red-600/50 hover:shadow-lg hover:shadow-red-600/10 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none dark:hover:border-red-500/30"
               >
                 <span className="w-fit rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
                   {kit.tipo_obra}
@@ -102,7 +103,7 @@ export default function KitsPage() {
                   </div>
                   <Link
                     href={`/kits/${kit.id}`}
-                    className="inline-flex h-10 items-center justify-center rounded-full bg-red-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+                    className="inline-flex h-10 items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-5 text-sm font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40"
                   >
                     Ver detalle
                   </Link>

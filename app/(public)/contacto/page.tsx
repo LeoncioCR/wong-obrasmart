@@ -13,8 +13,11 @@ const WHATSAPP_HREF = enlaceWhatsapp("");
 
 export default function ContactoPage() {
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <div className="flex flex-1 flex-col px-4 pb-20 pt-14 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-600 dark:text-red-500">
+          WONG · Contacto
+        </p>
         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
           Contacto
         </h1>
@@ -27,7 +30,7 @@ export default function ContactoPage() {
 
         <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-2">
           <div className="flex flex-col gap-6">
-            <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
               <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
                 Información de contacto
               </h2>
@@ -38,7 +41,7 @@ export default function ContactoPage() {
                     className="flex items-center gap-3 text-zinc-700 transition-colors hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-500"
                   >
                     <svg
-                      className="h-5 w-5 shrink-0 text-zinc-400"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-600/10 p-2 text-red-600 dark:text-red-500"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -61,7 +64,7 @@ export default function ContactoPage() {
                     className="flex items-center gap-3 text-zinc-700 transition-colors hover:text-red-600 dark:text-zinc-300 dark:hover:text-red-500"
                   >
                     <svg
-                      className="h-5 w-5 shrink-0 text-zinc-400"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-600/10 p-2 text-red-600 dark:text-red-500"
                       viewBox="0 0 24 24"
                       fill="currentColor"
                     >
@@ -72,7 +75,7 @@ export default function ContactoPage() {
                 </li>
                 <li className="flex items-center gap-3 text-zinc-700 dark:text-zinc-300">
                   <svg
-                    className="h-5 w-5 shrink-0 text-zinc-400"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-600/10 p-2 text-red-600 dark:text-red-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -92,7 +95,7 @@ export default function ContactoPage() {
                 </li>
                 <li className="flex items-center gap-3 text-zinc-700 dark:text-zinc-300">
                   <svg
-                    className="h-5 w-5 shrink-0 text-zinc-400"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-600/10 p-2 text-red-600 dark:text-red-500"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -114,7 +117,7 @@ export default function ContactoPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm shadow-zinc-200/40 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-900 dark:text-zinc-50">
               Formulario de contacto
             </h2>
@@ -163,7 +166,7 @@ export default function ContactoPage() {
               </div>
               <button
                 type="submit"
-                className="inline-flex h-12 w-full items-center justify-center rounded-full bg-red-600 px-8 text-base font-semibold text-white transition-colors hover:bg-red-700 sm:w-auto"
+                className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-8 text-base font-semibold text-white shadow-md shadow-red-600/30 transition-all hover:from-red-700 hover:to-red-600 hover:shadow-lg hover:shadow-red-600/40 sm:w-auto"
               >
                 Enviar mensaje
               </button>

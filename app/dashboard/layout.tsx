@@ -37,7 +37,9 @@ export default function DashboardLayout({
       />
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminHeader title={titulo} onMenuClick={() => setMobileOpen(true)} />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex flex-1 flex-col bg-zinc-50/50 dark:bg-zinc-950/40">
+          {children}
+        </main>
       </div>
     </div>
   );

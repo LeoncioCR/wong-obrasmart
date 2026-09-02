@@ -244,14 +244,14 @@ export default function MaquinariaAdminPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <div className="flex flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-7xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
               Maquinaria
             </h1>
-            <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
+            <p className="mt-1.5 text-base text-zinc-600 dark:text-zinc-400">
               {cargando
                 ? "Cargando máquinas..."
                 : errorSupabase
@@ -262,7 +262,7 @@ export default function MaquinariaAdminPage() {
           <button
             type="button"
             onClick={abrirNuevo}
-            className="inline-flex h-12 w-fit items-center justify-center gap-2 rounded-full bg-red-600 px-6 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-red-700"
+            className="inline-flex h-12 w-fit items-center justify-center gap-2 rounded-xl bg-red-600 px-6 text-sm font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md"
           >
             <svg
               className="h-4 w-4"
@@ -300,7 +300,7 @@ export default function MaquinariaAdminPage() {
             No hay máquinas registradas.
           </div>
         ) : (
-          <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm shadow-zinc-200/40 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[760px] text-left text-sm">
                 <thead>
@@ -320,7 +320,7 @@ export default function MaquinariaAdminPage() {
                   {items.map((item) => (
                     <tr
                       key={item.id}
-                      className="border-b border-zinc-100 last:border-0 dark:border-zinc-800/60"
+                      className="border-b border-zinc-100 last:border-0 transition-colors hover:bg-zinc-50/50 dark:border-zinc-800/60 dark:hover:bg-zinc-800/30"
                     >
                       <td className="sticky left-0 bg-white px-5 py-3.5 dark:bg-zinc-900">
                         <div className="flex items-center gap-3">
@@ -519,14 +519,14 @@ export default function MaquinariaAdminPage() {
                     type="button"
                     onClick={() => setModalForm(null)}
                     disabled={procesando}
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-300 px-6 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
+                    className="inline-flex h-11 items-center justify-center rounded-xl border border-zinc-300 px-6 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:text-zinc-50 dark:hover:bg-zinc-800"
                   >
                     Cancelar
                   </button>
                   <button
                     type="submit"
                     disabled={procesando}
-                    className="inline-flex h-11 items-center justify-center rounded-full bg-red-600 px-6 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="inline-flex h-11 items-center justify-center rounded-xl bg-red-600 px-6 text-sm font-semibold text-white shadow-sm shadow-red-600/30 transition-all hover:bg-red-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {procesando
                       ? "Guardando..."
